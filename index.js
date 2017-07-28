@@ -1,7 +1,9 @@
 const http = require('http')
-const createHandler = require('github-webhook-handler')
 const config = require('./config')
-const handler = createHandler({ path: '/webhook', secret: config.secret })
+const createHandler = require('node-gitlab-webhook')
+const handler = createHandler([
+  { path: '/webhook', secret: config.secret },
+])
 
 http.createServer((req, res) => {
   handler(req, res, err => {
@@ -15,15 +17,10 @@ handler.on('error', err => {
 })
 
 handler.on('push', event => {
-  console.log('Received a push event for %s to %s', 
-    event.payload.repository.name, 
-    event.payload.ref)
-})
-
-handler.on('issues',  event => {
-  console.log('Received an issue event for %s action=%s: #%d %s',
+  console.log(
+    'Received a push event for %s to %s',
     event.payload.repository.name,
-    event.payload.action,
-    event.payload.issue.number,
-    event.payload.issue.title)
+    event.payload.ref
+  )
+  console.log(event.path)
 })
