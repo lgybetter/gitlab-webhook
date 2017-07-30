@@ -1,8 +1,11 @@
 module.exports = {
   secret: 'lgybetter',
   port: 5000,
-  user: {
-    name: 'lgybetter',
-    passwd: '123456'
-  }
+  pushServiceUrl: 'http://localhost:5001',
+  projects: [
+    {
+      name: 'auto-upload',
+      id: 'lgybetter2017'
+    }
+  ]
 }
